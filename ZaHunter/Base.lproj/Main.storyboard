@@ -33,6 +33,7 @@
                     </view>
                     <connections>
                         <outlet property="mapVIew" destination="eXY-ne-r1D" id="IwE-j3-cZs"/>
+                        <outlet property="mapView" destination="eXY-ne-r1D" id="WrR-hl-7Go"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
