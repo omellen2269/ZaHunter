@@ -9,15 +9,63 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
+    var iceCreamShop: [MKMapItem] = []
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        locationManager.requestWhenInUseAuthorization()
+        mapView.showsUserLocation = true
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
         
+        mapView.delegate = self
     }
 
+    
+    
+    
+    
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        currentLocation = locations[0]
+    }
+    @IBAction func whenZoomPressed(_ sender: Any)
+    {
+        let center = currentLocation.coordinate
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @IBAction func whenSearchPressed(_ sender: Any)
+    {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = "Ice Cream"
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        request.region = MKCoordinateRegion(center: currentLocation.coordinate, span: span)
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            guard let response = response else { return }
+            for mapItem in response.mapItems {
+                self.iceCreamShop.append(mapItem)
+                let annotation = MKPointAnnotation()
+                annotation.title = mapItem.name
+                annotation.coordinate = mapItem.placemark.coordinate
+                
+                
+                self.mapView.addAnnotation(annotation)
+            }
+        }
+    }
+    
 }
