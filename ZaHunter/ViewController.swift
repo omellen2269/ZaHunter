@@ -29,30 +29,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.delegate = self
     }
 
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    //func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         
-        if annotation.isEqual(mapView.userLocation) {
-            return nil
-        }
-        let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
-        pin.canShowCallout = true
-        let button = UIButton(type: .detailDisclosure)
-        pin.rightCalloutAccessoryView = button
-        pin.animatesDrop = true
+       // if annotation.isEqual(mapView.userLocation) {
+       //     return nil
+       // }
+       // let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
+       // pin.canShowCallout = true
+      // let button = UIButton(type: .detailDisclosure)
+       // pin.rightCalloutAccessoryView = button
+       // pin.animatesDrop = true
         
         
       
-        return pin
+       // return pin
         
-    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let identifier = "Identifier"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-    }
-    
+    //}
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
@@ -87,5 +80,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             }
         }
     }
+    
+    // https://www.raywenderlich.com/548-mapkit-tutorial-getting-started
+    
     
 }
