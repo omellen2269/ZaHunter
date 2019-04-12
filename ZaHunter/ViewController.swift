@@ -29,24 +29,40 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         mapView.delegate = self
     }
 
-    //func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
+        let view = MKAnnotationView()
+        var currentMapItem = MKMapItem()
+        if let title = view.annotation?.title, let shopName = title {
+            for mapItem in iceCreamShop {
+                if mapItem.name == shopName {
+                    currentMapItem = mapItem
+                }
+            }
+        }
+        let placemark = currentMapItem.placemark
         
-       // if annotation.isEqual(mapView.userLocation) {
-       //     return nil
-       // }
-       // let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
-       // pin.canShowCallout = true
-      // let button = UIButton(type: .detailDisclosure)
-       // pin.rightCalloutAccessoryView = button
-       // pin.animatesDrop = true
+        if annotation.isEqual(mapView.userLocation) {
+            return nil
+        }
+        let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        pin.canShowCallout = true
+        pin.animatesDrop = true
+        let detailedLabel = UILabel()
+        detailedLabel.text = "\(placemark)"
+        pin.detailCalloutAccessoryView = detailedLabel
         
         
       
-       // return pin
+        return pin
         
-    //}
+    }
     
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
@@ -82,6 +98,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     // https://www.raywenderlich.com/548-mapkit-tutorial-getting-started
+    
+    
     
     
 }
